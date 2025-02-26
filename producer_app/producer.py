@@ -4,10 +4,11 @@ import files.schema_exec_pb2 as schema_exec_pb2  # Import the Protobuf schema
 from google.protobuf.timestamp_pb2 import Timestamp
 from mcap_protobuf.writer import Writer
 import random
+import io  # Import io for in-memory binary streams
 
 # 🎯 Step 1: Connect to Pulsar
 client = pulsar.Client('pulsar://localhost:6650')  # Connecting to the Pulsar broker
-producer = client.create_producer('mcap-topic')  # Creating a producer for our topic
+producer = client.create_producer('my-topic')
 
 # ⏳ Step 2: Frequency Config (1Hz to 1kHz options)
 freq_to_ns = {
@@ -17,7 +18,7 @@ freq_to_ns = {
     "1kHz": 1_000_000       # 1 millisecond
 }
 
-selected_freq = "10Hz"  
+selected_freq = "1Hz"  
 interval_ns = freq_to_ns[selected_freq]
 
 # ⏳ Step 3: Set the Time Range
@@ -46,19 +47,17 @@ for timestamp_ns in time_generator(start_ns, end_ns, interval_ns):
         timestamp=timestamp, num_apps=2, apps=[app1, app2]
     )
 
-    # 📝 Write the MCAP Log to a Temporary File
-    with open("temp.mcap", "wb") as f, Writer(f) as mcap_writer:
+    # 📝 Write the MCAP Log to an In-Memory Binary Stream
+    with io.BytesIO() as mcap_stream, Writer(mcap_stream) as mcap_writer:
         mcap_writer.write_message(
             topic="topic/app_exec",
             message=app_exec_message,
             log_time=timestamp_ns,
             publish_time=timestamp_ns,
         )
+        mcap_data = mcap_stream.getvalue()  # Get the binary data from the stream
 
-    # 📤 Read the MCAP File & Send It to Pulsar
-    with open("temp.mcap", "rb") as f:
-        mcap_data = f.read()
-
+    # 📤 Send the Binary Data to Pulsar
     producer.send(mcap_data)  # Send to Pulsar
     print(f"🔥 Published MCAP log at {timestamp.seconds}s, {timestamp.nanos}ns")
 
