@@ -1,0 +1,14 @@
+{
+  "schema_name": "CriticalSystemInfoV3",
+  "fields": [
+    { "name": "timestamp_ns", "type": "uint64", "description": "Nanosecond precision timestamp" },
+    { "name": "cpu_usage", "type": "float32", "description": "CPU usage in percentage" },
+    { "name": "memory_usage_mb", "type": "float32", "description": "Memory usage in MB" },
+    { "name": "sensor_health_status", "type": "string", "description": "Sensor health status (OK, WARNING, ERROR)" },
+    { "name": "network_usage_kbps", "type": "float32", "description": "Network bandwidth usage in Kbps" },
+    { "name": "battery_voltage_v", "type": "float32", "description": "Battery voltage in Volts" },
+    { "name": "disk_io_mbps", "type": "float32", "description": "Disk I/O speed in MBps" },
+    { "name": "power_consumption_w", "type": "float32", "description": "Power consumption in Watts" },
+    { "name": "temperature", "type": "float32[3]", "description": "List of three temperature readings (e.g., CPU, GPU, Ambient)" }
+  ]
+}
