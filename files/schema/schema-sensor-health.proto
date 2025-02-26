@@ -10,6 +10,6 @@ package foxglove;
 message SensorHealth {
   // Timestamp of log message
   google.protobuf.Timestamp timestamp = 1;
-  int_64 num_sensor = 2;
-  repeated float64 sensor_temp = 3;
+  int64 num_sensors = 2;
+  repeated double sensor_temps = 3;
 }

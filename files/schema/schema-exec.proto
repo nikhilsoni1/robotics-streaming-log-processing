@@ -6,16 +6,16 @@ import "google/protobuf/timestamp.proto";
 
 package foxglove;
 
-message app_info {
-  string app_name;
-  float_64 exec_time;
-  float_64 cpu_usage;
+message AppInfo {
+  string app_name = 1;
+  double exec_time = 2;
+  double cpu_usage = 3;
 }
 
 // A log message
 message AppExec {
   // Timestamp of log message
   google.protobuf.Timestamp timestamp = 1;
-  int_64 num_apps = 2;
-  repeated app_info apps = 3;
+  int64 num_apps = 2;
+  repeated AppInfo apps = 3;
 }
