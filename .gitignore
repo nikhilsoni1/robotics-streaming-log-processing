@@ -1,3 +1,6 @@
 .venv/
 .mcap
 *.mcap
+.DS_Store
+__pycache__/
+
