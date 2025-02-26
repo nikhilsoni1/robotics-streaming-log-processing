@@ -30,6 +30,8 @@ mcap==1.2.2
     #   mcap-protobuf-support
 mcap-protobuf-support==0.5.3
     # via -r requirements.in
+multidict==6.1.0
+    # via pulsar
 mypy-extensions==1.0.0
     # via black
 packaging==24.2
@@ -48,6 +50,8 @@ protobuf==5.29.3
     # via mcap-protobuf-support
 ptyprocess==0.7.0
     # via pexpect
+pulsar==2.0.2
+    # via -r requirements.in
 pure-eval==0.2.3
     # via stack-data
 pygments==2.19.1
@@ -66,6 +70,7 @@ typing-extensions==4.12.2
     # via
     #   black
     #   ipython
+    #   multidict
 wcwidth==0.2.13
     # via prompt-toolkit
 zstandard==0.23.0
