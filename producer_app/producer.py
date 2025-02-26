@@ -32,8 +32,21 @@ def time_generator(start_ns, end_ns, interval_ns):
         yield current_ns  # Give the next timestamp
         current_ns += interval_ns  # Move forward in time
 
+def counter_generator():
+    counter = 0
+    while True:
+        counter += 1
+        yield counter
 
-for timestamp_ns in time_generator(start_ns, end_ns, interval_ns):
+counter_gen = counter_generator()
+
+_start_ns = time.time_ns()
+_runtime_ns = 5 * 1_000_000_000
+
+while True:
+
+    timestamp_ns = time.time_ns()
+
     # 🕒 Create Timestamp
     timestamp = Timestamp()
     timestamp.seconds = timestamp_ns // 1_000_000_000
@@ -56,14 +69,20 @@ for timestamp_ns in time_generator(start_ns, end_ns, interval_ns):
         mcap_writer.write_message(
             topic="topic/app_exec",
             message=app_exec_message,
-            log_time=timestamp_ns,
-            publish_time=timestamp_ns,
+            log_time=time.time_ns(),
+            publish_time=time.time_ns(),
         )
         mcap_data = mcap_stream.getvalue()  # Get the binary data from the stream
 
     # 📤 Send the Binary Data to Pulsar
     producer.send(mcap_data)  # Send to Pulsar
-    print(f"🔥 Published MCAP log at {timestamp.seconds}s, {timestamp.nanos}ns")
+    counter = next(counter_gen)  # Get the next counter value
+    print(f"🔥 Published MCAP log {counter} at {timestamp.seconds}s, {timestamp.nanos}ns")
+
+    if time.time_ns() - _start_ns > _runtime_ns:
+        break
+    else:
+        time.sleep(1)
 
 
 client.close()
