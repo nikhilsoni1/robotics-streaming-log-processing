@@ -33,8 +33,7 @@ def counter_generator():
 counter_gen = counter_generator()
 
 _start_ns = time.time_ns()
-_runtime_ns = 5 * 1_000_000_000
-
+_runtime_ns = 3600 * 1_000_000_000 # convert seconds to nanoseconds
 while True:
 
     timestamp_ns = time.time_ns()
@@ -68,24 +67,27 @@ while True:
     )
 
     # Write the MCAP Log to an In-Memory Binary Stream
-    with io.BytesIO() as mcap_stream, Writer(mcap_stream) as mcap_writer:
-        mcap_writer.write_message(
-            topic="topic/app_exec",
-            message=app_exec_message,
-            log_time=time.time_ns(),
-            publish_time=time.time_ns(),
-        )
+    mcap_stream = io.BytesIO()
+    mcap_writer = Writer(mcap_stream)
+    mcap_writer.write_message(
+        topic="topic/app_exec",
+        message=app_exec_message,
+        log_time=time.time_ns(),
+        publish_time=time.time_ns(),
+    )
 
-        mcap_writer.write_message(
-            topic="topic/sensor_health",
-            message=sensor_health_message,
-            log_time=timestamp_ns,
-            publish_time=timestamp_ns,
-        )
-        mcap_data = mcap_stream.getvalue()  # Get the binary data from the stream
-
-    # Send the Binary Data to Pulsar
+    mcap_writer.write_message(
+        topic="topic/sensor_health",
+        message=sensor_health_message,
+        log_time=timestamp_ns,
+        publish_time=timestamp_ns,
+    )
+    mcap_writer.finish()
+    mcap_stream.seek(0)  # Reset the stream position before reading
+    mcap_data = mcap_stream.read()
     producer.send(mcap_data)  # Send to Pulsar
+    mcap_stream.close()
+    # Send the Binary Data to Pulsar
     counter = next(counter_gen)  # Get the next counter value
     print(
         f"Published MCAP log {counter} at {timestamp.seconds}s, {timestamp.nanos}ns"
