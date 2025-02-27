@@ -33,7 +33,7 @@ def counter_generator():
 counter_gen = counter_generator()
 
 _start_ns = time.time_ns()
-_runtime_ns = 3600 * 1_000_000_000 # convert seconds to nanoseconds
+_runtime_ns = 10 * 1_000_000_000 # convert seconds to nanoseconds
 while True:
 
     timestamp_ns = time.time_ns()
