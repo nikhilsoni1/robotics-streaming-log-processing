@@ -98,7 +98,7 @@ while True:
     if time.time_ns() - _start_ns > _runtime_ns:
         break
     else:
-        time.sleep(1)
+        time.sleep(0.01)
 
 
 client.close()
