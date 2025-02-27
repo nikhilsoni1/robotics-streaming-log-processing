@@ -79,8 +79,8 @@ while True:
     mcap_writer.write_message(
         topic="topic/sensor_health",
         message=sensor_health_message,
-        log_time=timestamp_ns,
-        publish_time=timestamp_ns,
+        log_time=time.time_ns(),
+        publish_time=time.time_ns(),
     )
     mcap_writer.finish()
     mcap_stream.seek(0)  # Reset the stream position before reading
@@ -96,7 +96,7 @@ while True:
     if time.time_ns() - _start_ns > _runtime_ns:
         break
     else:
-        time.sleep(1)
+        time.sleep(0.1)
 
 
 client.close()
