@@ -16,3 +16,7 @@
 # Important Links
 1. Run a Pulsar cluster locally with Docker Compose
 2. [Getting Started with Docker Compose](https://pulsar.apache.org/docs/4.0.x/getting-started-docker-compose/)
+
+# git tagging
+1. git tag -a working-producer-broker -m "Tagging a working copy of producer broker combo"
+2. git push origin working-producer-broker
