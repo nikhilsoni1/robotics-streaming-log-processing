@@ -33,7 +33,7 @@ def counter_generator():
 counter_gen = counter_generator()
 
 _start_ns = time.time_ns()
-_runtime_ns = 20 * 1_000_000_000 # convert seconds to nanoseconds
+_runtime_ns = 3600 * 1_000_000_000 # convert seconds to nanoseconds
 while True:
 
     timestamp_ns = time.time_ns()
@@ -69,13 +69,15 @@ while True:
     # Write the MCAP Log to an In-Memory Binary Stream
     mcap_stream = io.BytesIO()
     mcap_writer = Writer(mcap_stream)
+
+    # make this 10hz
     mcap_writer.write_message(
         topic="topic/app_exec",
         message=app_exec_message,
         log_time=time.time_ns(),
         publish_time=time.time_ns(),
     )
-
+    # make this 50hz
     mcap_writer.write_message(
         topic="topic/sensor_health",
         message=sensor_health_message,
@@ -96,7 +98,7 @@ while True:
     if time.time_ns() - _start_ns > _runtime_ns:
         break
     else:
-        time.sleep(0.1)
+        time.sleep(1)
 
 
 client.close()

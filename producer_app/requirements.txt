@@ -2,3 +2,4 @@ mcap
 mcap-protobuf-support
 pulsar-client
 pyarrow
+influxdb-client
