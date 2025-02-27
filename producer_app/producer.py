@@ -6,6 +6,7 @@ from google.protobuf.timestamp_pb2 import Timestamp
 from mcap_protobuf.writer import Writer
 import random
 import io
+import time
 
 
 client = pulsar.Client("pulsar://localhost:6650")
@@ -34,6 +35,7 @@ counter_gen = counter_generator()
 
 _start_ns = time.time_ns()
 _runtime_ns = 3600 * 1_000_000_000 # convert seconds to nanoseconds
+last_time = time.monotonic_ns()
 while True:
 
     timestamp_ns = time.time_ns()
@@ -69,21 +71,25 @@ while True:
     # Write the MCAP Log to an In-Memory Binary Stream
     mcap_stream = io.BytesIO()
     mcap_writer = Writer(mcap_stream)
-
-    # make this 10hz
+    _log_ts = time.time_ns()
+    # make this 100hz
     mcap_writer.write_message(
         topic="topic/app_exec",
         message=app_exec_message,
-        log_time=time.time_ns(),
-        publish_time=time.time_ns(),
+        log_time= _log_ts,
+        publish_time=_log_ts,
     )
+
     # make this 50hz
-    mcap_writer.write_message(
-        topic="topic/sensor_health",
-        message=sensor_health_message,
-        log_time=time.time_ns(),
-        publish_time=time.time_ns(),
-    )
+    interval_ns = 0.02 * 1_000_000_000
+    if time.monotonic_ns() - last_time > interval_ns:
+        mcap_writer.write_message(
+            topic="topic/sensor_health",
+            message=sensor_health_message,
+            log_time=_log_ts,
+            publish_time=_log_ts,
+        )
+        last_time = time.monotonic_ns()
     mcap_writer.finish()
     mcap_stream.seek(0)  # Reset the stream position before reading
     mcap_data = mcap_stream.read()

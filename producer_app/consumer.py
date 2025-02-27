@@ -36,6 +36,24 @@ def protobuf_app_exec_to_line_protocol(msg):
         list_of_points.append(point)
     return list_of_points
 
+def protobuf_sensor_health_to_line_protocol(msg):
+    """Converts a Protobuf message into a flattened dictionary format."""
+
+    msg_dict = MessageToDict(msg)
+    ts = int(msg.timestamp.seconds * 1e9 + msg.timestamp.nanos)
+    num_sensors = msg_dict.get("numSensors", 0)
+    list_of_points = list()
+    for idx, i in enumerate(msg_dict.get("sensorTemps", [])):
+        point = (
+            Point("sensor_health")
+            .tag("num_sensors", num_sensors)
+            .tag("sensor_id", idx)
+            .field("sensor_temp", i)
+            .time(ts, WritePrecision.NS)
+        )
+        list_of_points.append(point)
+    return list_of_points
+
 def protobuf_to_parquet(proto_msgs, file_path):
     """Converts a list of Protobuf messages into a flattened Parquet format using PyArrow."""
     records = []
@@ -89,6 +107,11 @@ def consumer():
                 if channel.topic == "topic/app_exec":
                     points = protobuf_app_exec_to_line_protocol(proto_msg)
                     points_list += points
+                elif channel.topic == "topic/sensor_health":
+                    points = protobuf_sensor_health_to_line_protocol(proto_msg)
+                    points_list += points
+                else:
+                    pass
             consumer.acknowledge(msg)
         except (RecordLengthLimitExceeded, EndOfFile) as e:
             print(f"Listening....")

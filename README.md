@@ -18,5 +18,5 @@
 2. [Getting Started with Docker Compose](https://pulsar.apache.org/docs/4.0.x/getting-started-docker-compose/)
 
 # git tagging
-1. git tag -a working-producer-broker -m "Tagging a working copy of producer broker combo"
-2. git push origin working-producer-broker
+1. git tag -a v1.0 -m "working copy for casestudy"
+2. git push origin v1.0
