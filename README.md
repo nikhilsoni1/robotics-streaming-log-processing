@@ -34,6 +34,7 @@
 7. sudo chown -R nikhilsoni:staff data
 8. docker exec -it broker /bin/sh
 9. docker compose logs -f
+10. jupyter nbconvert --to script 'delete_influx_buckets.ipynb'
 
 # Important Links
 1. [Run a Pulsar cluster locally with Docker Compose](https://pulsar.apache.org/docs/4.0.x/getting-started-docker-compose/)
