@@ -100,7 +100,7 @@ while True:
     )
 
     # make this 50hz
-    interval_ns = 0.2 * 1_000_000_000
+    interval_ns = 0.02 * 1_000_000_000
     if time.monotonic_ns() - last_time > interval_ns:
         mcap_writer.write_message(
             topic="topic/sensor_health",
@@ -123,7 +123,7 @@ while True:
     if time.time_ns() - _start_ns > _runtime_ns:
         break
     else:
-        time.sleep(0.1)
+        time.sleep(0.01)
 
 
 client.close()
