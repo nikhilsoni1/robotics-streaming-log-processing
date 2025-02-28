@@ -1,0 +1,15 @@
+{
+    "timestamp": {
+      "seconds": 0,
+      "nanos": 0
+    },
+    "num_apps": 0,
+    "apps": [
+      {
+        "app_name": "example_app",
+        "exec_time": 0.0,
+        "cpu_usage": 0.0
+      }
+    ]
+  }
+  
