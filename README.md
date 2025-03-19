@@ -5,22 +5,28 @@
    docker compose up influx_db pulsar01
    ```
    Ensure they are healthy.
-2. Set up the producer application:
+
+2. Create directories for zookeeper and bookeeper to store data
+   ```sh
+   chmod +x create_dirs.sh
+   ./create_dirs.sh
+   ```
+3. Set up the producer application:
    ```sh
    cd producer_app
    python3 -m venv venv
    source venv/bin/activate
    pip install -r requirements.txt
    ```
-3. Start the producer:
+4. Start the producer:
    ```sh
    python producer.py
    ```
-4. Start the consumer:
+5. Start the consumer:
    ```sh
    python consumer.py
    ```
-5. Update the token in the consumer if needed:
+6. Update the token in the consumer if needed:
    - Access InfluxDB admin panel: [InfluxDB Admin Panel](http://localhost:8086) (username: admin, password: admin123)
    - Access Grafana: [Grafana](http://localhost:3000) (username: admin, password: admin)
 
@@ -35,19 +41,3 @@
 8. docker exec -it broker /bin/sh
 9. docker compose logs -f
 10. jupyter nbconvert --to script 'delete_influx_buckets.ipynb'
-
-# Important Links
-1. [Run a Pulsar cluster locally with Docker Compose](https://pulsar.apache.org/docs/4.0.x/getting-started-docker-compose/)
-
-# Git Tagging
-1. git tag -a v1.0 -m "working copy for casestudy"
-2. git push origin v1.0
-3. git tag -a working-copy -m "Tagging the latest working copy"
-4. git push origin working-copy
-
-# Protobuf Commands
-1. protoc --proto_path=files/schema --python_out=files/ files/schema/*.proto
-
-# To-Do
-- [ ] Modify producer to produce both the topics
-- [ ] Re-do Dockerfile to copy /producer_app into Docker and run that
