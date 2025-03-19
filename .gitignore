@@ -6,3 +6,7 @@ __pycache__/
 */data/
 json_store/
 read_parquet.ipynb
+*.csv
+synthetic_data.ipynb
+synthetic_data.py
+sensor_health_proto_to_json.json

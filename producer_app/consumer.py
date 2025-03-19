@@ -86,7 +86,7 @@ def consumer():
     influx_url = "http://localhost:8086"
     influx_org = "myorg"
     influx_bucket = "bucket01"
-    influx_token = "x8ZENWA2tU4tJ3a-OWIoPWlFk5lmKppq80qLhLnDk64H6RPTewubkgX13eArWwLuYf4JREeFcZQg27aedU18_g=="
+    influx_token = "WA9QeACIozPJm1NKnSIg5o91Iq_Er1a-_dm8oPcdP8gtNNfc8yg32g7rpRWNgzKP91TVaDRolk3cfHugSYrLhQ=="
 
 
     # Initialize Pulsar client and consumer

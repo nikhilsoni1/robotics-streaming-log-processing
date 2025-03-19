@@ -9,9 +9,13 @@ from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import runtime_version as _runtime_version
 from google.protobuf import symbol_database as _symbol_database
 from google.protobuf.internal import builder as _builder
-
 _runtime_version.ValidateProtobufRuntimeVersion(
-    _runtime_version.Domain.PUBLIC, 5, 29, 1, "", "schema-exec.proto"
+    _runtime_version.Domain.PUBLIC,
+    5,
+    29,
+    1,
+    '',
+    'schema-exec.proto'
 )
 # @@protoc_insertion_point(imports)
 
@@ -21,17 +25,15 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
-    b'\n\x11schema-exec.proto\x12\x08\x66oxglove\x1a\x1fgoogle/protobuf/timestamp.proto"A\n\x07\x41ppInfo\x12\x10\n\x08\x61pp_name\x18\x01 \x01(\t\x12\x11\n\texec_time\x18\x02 \x01(\x01\x12\x11\n\tcpu_usage\x18\x03 \x01(\x01"k\n\x07\x41ppExec\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x10\n\x08num_apps\x18\x02 \x01(\x03\x12\x1f\n\x04\x61pps\x18\x03 \x03(\x0b\x32\x11.foxglove.AppInfob\x06proto3'
-)
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x11schema-exec.proto\x12\x08\x66oxglove\x1a\x1fgoogle/protobuf/timestamp.proto\"A\n\x07\x41ppInfo\x12\x10\n\x08\x61pp_name\x18\x01 \x01(\t\x12\x11\n\texec_time\x18\x02 \x01(\x01\x12\x11\n\tcpu_usage\x18\x03 \x01(\x01\"k\n\x07\x41ppExec\x12-\n\ttimestamp\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x10\n\x08num_apps\x18\x02 \x01(\x03\x12\x1f\n\x04\x61pps\x18\x03 \x03(\x0b\x32\x11.foxglove.AppInfob\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
-_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, "schema_exec_pb2", _globals)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'schema_exec_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
-    DESCRIPTOR._loaded_options = None
-    _globals["_APPINFO"]._serialized_start = 64
-    _globals["_APPINFO"]._serialized_end = 129
-    _globals["_APPEXEC"]._serialized_start = 131
-    _globals["_APPEXEC"]._serialized_end = 238
+  DESCRIPTOR._loaded_options = None
+  _globals['_APPINFO']._serialized_start=64
+  _globals['_APPINFO']._serialized_end=129
+  _globals['_APPEXEC']._serialized_start=131
+  _globals['_APPEXEC']._serialized_end=238
 # @@protoc_insertion_point(module_scope)
