@@ -10,3 +10,4 @@ read_parquet.ipynb
 synthetic_data.ipynb
 synthetic_data.py
 sensor_health_proto_to_json.json
+.env
